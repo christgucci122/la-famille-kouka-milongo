@@ -1,0 +1,135 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Famille Kouka Milongo</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f2f5f9;color:#17243a}
+header{background:#123c32;color:white;padding:25px 18px;text-align:center}
+header h1{margin:0;font-size:24px}
+header p{margin:10px 0 0;color:#d4e8dd}
+nav{display:flex;overflow:auto;background:#fff;padding:10px;gap:8px;position:sticky;top:0}
+nav button{border:0;padding:12px;border-radius:9px;background:#e9f1ed;color:#123c32;font-weight:bold;white-space:nowrap}
+main{max-width:850px;margin:auto;padding:16px}
+section{background:white;padding:18px;border-radius:14px;margin-bottom:16px;box-shadow:0 2px 9px #0000000c}
+h2{color:#17634c;font-size:20px}
+input,textarea{width:100%;padding:13px;margin:7px 0;border:1px solid #ccd5d0;border-radius:9px;font-size:15px}
+.action{background:#17634c;color:white;border:0;padding:12px 17px;border-radius:9px;font-weight:bold}
+.post{background:#f3f7f5;padding:12px;border-radius:9px;margin-top:10px}
+footer{text-align:center;padding:25px;color:#68766f}
+</style>
+</head>
+<body>
+
+<header>
+<h1>LA FAMILLE KOUKA MILONGO</h1>
+<p>Unis par le sang, forts par l'amour ❤️</p>
+</header>
+
+<nav>
+<button onclick="show('accueil')">Accueil</button>
+<button onclick="show('discussion')">Discussions</button>
+<button onclick="show('evenements')">Événements</button>
+<button onclick="show('galerie')">Galerie</button>
+<button onclick="show('invitations')">Invitations</button>
+</nav>
+
+<main>
+
+<section id="accueil">
+<h2>Bienvenue dans notre famille !</h2>
+<p>Bienvenue sur notre espace familial officiel. Un lieu pour nous retrouver, communiquer, partager nos souvenirs et organiser nos rencontres.</p>
+<h3>Notre devise</h3>
+<p>La famille avant tout. Ensemble aujourd'hui, unis pour demain.</p>
+</section>
+
+<section id="discussion" hidden>
+<h2>💬 Espace de discussion</h2>
+<p>Publiez un message pour la famille.</p>
+<input id="auteur" placeholder="Votre nom">
+<textarea id="message" placeholder="Écrivez votre message..."></textarea>
+<button class="action" onclick="publier()">Publier</button>
+<div id="messages"></div>
+</section>
+
+<section id="evenements" hidden>
+<h2>📅 Événements familiaux</h2>
+<input id="titre" placeholder="Nom de l'événement">
+<input id="date" type="date">
+<textarea id="details" placeholder="Description de l'événement"></textarea>
+<button class="action" onclick="evenement()">Ajouter</button>
+<div id="listeEvenements"></div>
+</section>
+
+<section id="galerie" hidden>
+<h2>📸 Galerie familiale</h2>
+<p>Sélectionnez une photo sur votre téléphone pour la visualiser.</p>
+<input type="file" accept="image/*" multiple onchange="photos(event)">
+<div id="photos"></div>
+</section>
+
+<section id="invitations" hidden>
+<h2>✉️ Invitations</h2>
+<p>Invitez un membre de la famille à découvrir notre site.</p>
+<input id="telephone" placeholder="Numéro WhatsApp avec indicatif">
+<button class="action" onclick="inviter()">Partager l'invitation</button>
+</section>
+
+</main>
+
+<footer>
+© 2026 - La Famille Kouka Milongo ❤️
+</footer>
+
+<script>
+function show(id){
+document.querySelectorAll('main section').forEach(s=>s.hidden=true);
+document.getElementById(id).hidden=false;
+window.scrollTo(0,0);
+}
+
+function publier(){
+let n=document.getElementById('auteur').value.trim();
+let m=document.getElementById('message').value.trim();
+if(!n||!m)return alert('Remplissez les deux champs');
+let p=document.createElement('div');
+p.className='post';
+p.textContent=n+' : '+m;
+document.getElementById('messages').prepend(p);
+document.getElementById('message').value='';
+}
+
+function evenement(){
+let t=document.getElementById('titre').value.trim();
+let d=document.getElementById('date').value;
+let x=document.getElementById('details').value.trim();
+if(!t||!d)return alert('Ajoutez un titre et une date');
+let p=document.createElement('div');
+p.className='post';
+p.textContent=t+' — '+d+' — '+x;
+document.getElementById('listeEvenements').prepend(p);
+}
+
+function photos(e){
+let zone=document.getElementById('photos');
+for(let f of e.target.files){
+let img=document.createElement('img');
+img.src=URL.createObjectURL(f);
+img.style='width:100%;max-width:220px;margin:5px;border-radius:10px';
+zone.appendChild(img);
+}
+}
+
+function inviter(){
+let tel=document.getElementById('telephone').value.trim();
+if(!tel)return alert('Entrez un numéro');
+let url='https://wa.me/'+tel.replace(/\D/g,'')+'?text='+encodeURIComponent('Bonjour ! Rejoins notre espace familial La Famille Kouka Milongo.');
+window.open(url,'_blank');
+}
+</script>
+
+</body>
+</html>
